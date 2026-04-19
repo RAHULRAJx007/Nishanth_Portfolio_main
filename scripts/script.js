@@ -566,26 +566,56 @@
   });
 
   /* ==================
-     LIGHTBOX
+     LIGHTBOX — images + videos
   ================== */
   const lightbox      = document.getElementById("lightbox");
   const lightboxImg   = document.getElementById("lightboxImg");
+  const lightboxVideo = document.getElementById("lightboxVideo");
   const lightboxClose = document.getElementById("lightboxClose");
 
-  document.querySelectorAll(".proj-img").forEach((img) => {
-    img.addEventListener("click", () => {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightbox.classList.add("open");
-      document.body.style.overflow = "hidden";
-    });
-  });
+  function openLightboxImage(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || "";
+    lightboxImg.style.display = "block";
+    lightboxVideo.style.display = "none";
+    lightboxVideo.pause();
+    lightboxVideo.src = "";
+    lightbox.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function openLightboxVideo(src) {
+    lightboxVideo.src = src;
+    lightboxVideo.style.display = "block";
+    lightboxImg.style.display = "none";
+    lightboxImg.src = "";
+    lightbox.classList.add("open");
+    document.body.style.overflow = "hidden";
+    lightboxVideo.play().catch(() => {});
+  }
 
   function closeLightbox() {
     lightbox.classList.remove("open");
     document.body.style.overflow = "";
     lightboxImg.src = "";
+    lightboxImg.style.display = "none";
+    lightboxVideo.pause();
+    lightboxVideo.src = "";
+    lightboxVideo.style.display = "none";
   }
+
+  // Clickable images
+  document.querySelectorAll(".proj-img").forEach((img) => {
+    img.addEventListener("click", () => openLightboxImage(img.src, img.alt));
+  });
+
+  // Clickable videos — grab src from <source> tag if needed
+  document.querySelectorAll(".proj-video").forEach((vid) => {
+    vid.addEventListener("click", () => {
+      const src = vid.src || (vid.querySelector("source") ? vid.querySelector("source").src : "");
+      if (src) openLightboxVideo(src);
+    });
+  });
 
   if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
   if (lightbox) {
