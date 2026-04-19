@@ -996,20 +996,45 @@ p:last-child { margin-bottom: 0; }
 
 @media (max-width: 768px) {
   .nav { padding: 1rem 1.5rem; }
-  .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--navy-mid); padding: 1.5rem; border-bottom: 1px solid var(--border-solid); gap: 1rem; }
-  .nav-links.open { display: flex; }
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: var(--navy-mid);
+    padding: 0 1.5rem;
+    border-bottom: 1px solid var(--border-solid);
+    gap: 1rem;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
+  }
+  .nav-links.open {
+    max-height: 400px;
+    opacity: 1;
+    padding: 1.5rem;
+  }
   .hamburger { display: flex; }
 
   .hero { padding: 6rem 1.5rem 3rem; }
+  .hero-visual { width: 220px; height: 220px; }
+  .ring-1 { width: 200px; height: 200px; margin: -100px 0 0 -100px; }
+  .ring-2 { width: 130px; height: 130px; margin: -65px 0 0 -65px; }
+  .ring-3 { width: 70px; height: 70px; margin: -35px 0 0 -35px; }
   .hero-stats { flex-wrap: wrap; gap: 1.2rem; }
   .section { padding: 4rem 0; }
   .container { padding: 0 1.5rem; }
 
   .projects-grid { grid-template-columns: 1fr; }
   .skills-grid { grid-template-columns: 1fr; }
-  .about-cards { grid-template-columns: 1fr; }
+  .about-cards { grid-template-columns: 1fr 1fr; }
   .edu-grid { grid-template-columns: 1fr; }
-  .resume-content { grid-template-columns: 1fr; }
+  .resume-content { grid-template-columns: 1fr; gap: 2rem; }
+  .resume-preview { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+  .resume-actions { flex-direction: column; }
+  .btn-download, .btn-secondary { width: 100%; text-align: center; justify-content: center; }
 
   .contact-link { min-width: auto; width: 100%; }
   .footer .container { flex-direction: column; gap: 0.5rem; text-align: center; }
@@ -1019,6 +1044,12 @@ p:last-child { margin-bottom: 0; }
   .hero-name { font-size: 3rem; }
   .hero-actions { flex-direction: column; }
   .btn-primary, .btn-ghost { text-align: center; }
+  .about-cards { grid-template-columns: 1fr; }
+  .hero-stats .stat-divider { display: none; }
+  .hero-stats { gap: 1rem; }
+  .tl-card { padding: 1.2rem; }
+  .resume-preview { align-items: flex-start; }
+  .cert-banner { flex-direction: column; text-align: center; gap: 0.8rem; }
 }
 /* ============================================
    PROJECT MEDIA — videos & images

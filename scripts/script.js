@@ -324,6 +324,31 @@
     document.head.appendChild(style);
   }
 
+  // OPTION 5: SHIMMER (Light sweep across labels)
+  function animateShimmer() {
+    const positions = [
+      { left: "20%", top: "15%" },
+      { right: "10%", top: "50%" },
+      { left: "50%", bottom: "15%" },
+      { left: "10%", top: "50%" }
+    ];
+
+    floatLabels.forEach((label, i) => {
+      Object.assign(label.style, positions[i]);
+      label.style.animation = `shimmer-label 3.5s ease-in-out infinite`;
+      label.style.animationDelay = `${i * 0.45}s`;
+    });
+
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes shimmer-label {
+        0%, 100% { opacity: 0.5; box-shadow: none; }
+        50% { opacity: 1; box-shadow: 0 0 12px rgba(232, 164, 74, 0.6), inset 0 0 8px rgba(232, 164, 74, 0.15); }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
   // OPTION 6: GRID SLIDE (Technical blueprint effect)
   function animateGridSlide() {
     const positions = [
@@ -494,7 +519,7 @@
       animateGlowOrbit();
       break;
     default:
-      animateGearSpin(); // Default to gear-spin
+      animateGearSpin();
   }
 
   /* ==================
@@ -527,12 +552,12 @@
   /* ==================
      ACTIVE NAV STYLE
   ================== */
-  const style = document.createElement("style");
-  style.textContent = `
+  const navActiveStyle = document.createElement("style");
+  navActiveStyle.textContent = `
     .nav-links a.active { color: var(--amber) !important; }
   `;
-  document.head.appendChild(style);
-})();
+  document.head.appendChild(navActiveStyle);
+
   /* ==================
      MAKE PS-TEXT EDITABLE
   ================== */
@@ -594,3 +619,5 @@
     );
     obs.observe(v);
   });
+
+})();
